@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong Game</title>
-    <style>
-        canvas {
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Display</title>
 </head>
 <body>
-    <canvas id="pongCanvas" width="800" height="400"></canvas>
-    <script src="./pong.js"></script>
+    <input type="file" id="file-input" accept=".json">
+    <div id="image-container"></div>
+
+    <script>
+        function displayImagesFromJson(jsonData) {
+            const imageContainer = document.getElementById('image-container');
+
+            jsonData.forEach(item => {
+                const src = item.src;
+                console.log("Displaying:", src);
+                const imageElement = document.createElement('img');
+                imageElement.src = src;
+                imageElement.style.width = '100%';
+                imageContainer.appendChild(imageElement);
+            });
+        }
+
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const content = event.target.result;
+                try {
+                    const jsonData = JSON.parse(content);
+                    displayImagesFromJson(jsonData);
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
+            };
+
+            reader.readAsText(file);
+        });
+    </script>
 </body>
 </html>
