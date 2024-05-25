@@ -4,6 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Decoder</title>
+    <style>
+        #images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        #images img {
+            max-width: 200px;
+            margin: 5px;
+            margin-top: 0px;
+        }
+    </style>
 </head>
 <body>
     <input type="file" id="fileInput" accept=".json">
@@ -25,8 +38,6 @@
                     data.forEach(function(url) {
                         const img = document.createElement('img');
                         img.src = url;
-                        img.style.maxWidth = '200px';
-                        img.style.margin = '5px';
                         imagesContainer.appendChild(img);
                     });
                 } catch (error) {
@@ -51,4 +62,5 @@
     </script>
 </body>
 </html>
+
 
