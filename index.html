@@ -1,44 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Image Display</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Decoder</title>
 </head>
 <body>
-    <input type="file" id="file-input" accept=".json">
-    <div id="image-container"></div>
+    <input type="file" id="fileInput" accept=".json">
+    <div id="images"></div>
 
     <script>
-        function displayImagesFromJson(jsonData) {
-            const imageContainer = document.getElementById('image-container');
-
-            jsonData.forEach(item => {
-                const src = item.src;
-                console.log("Displaying:", src);
-                const imageElement = document.createElement('img');
-                imageElement.src = src;
-                imageElement.style.width = '100%';
-                imageContainer.appendChild(imageElement);
-            });
-        }
-
-        document.getElementById('file-input').addEventListener('change', function(event) {
-            const file = event.target.files[0];
+        // Function to read and display images from selected JSON file
+        function readAndDisplayImages(file) {
             const reader = new FileReader();
 
             reader.onload = function(event) {
-                const content = event.target.result;
+                const jsonContent = event.target.result;
+
                 try {
-                    const jsonData = JSON.parse(content);
-                    displayImagesFromJson(jsonData);
+                    const data = JSON.parse(jsonContent);
+                    const imagesContainer = document.getElementById('images');
+                    imagesContainer.innerHTML = '';
+
+                    data.forEach(function(url) {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.style.maxWidth = '200px';
+                        img.style.margin = '5px';
+                        imagesContainer.appendChild(img);
+                    });
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                 }
             };
 
             reader.readAsText(file);
-        });
+        }
+
+        // Function to handle file input change event
+        function handleFileInputChange(event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                readAndDisplayImages(file);
+            }
+        }
+
+        // Add event listener to input element
+        document.getElementById('fileInput').addEventListener('change', handleFileInputChange);
     </script>
 </body>
 </html>
+
