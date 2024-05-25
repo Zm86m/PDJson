@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    /* Your existing CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .calculator {
+      width: 300px;
+      margin: 100px auto;
+      border: 2px solid #333;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .calculator input[type="button"] {
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .calculator input[type="text"] {
+      width: 100%;
+      height: 50px;
+      font-size: 20px;
+      margin-bottom: 10px;
+      text-align: right;
+    }
+    
+    .calculator input[none] {
+      border: white 0px solid; 
+      background: white;
+      cursor: unset;
+    }
+
+    #hiddenSection {
+      display: none;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #ccc;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body><div id="n">
+  <div class="calculator">
+    <input type="text" id="display" readonly>
+    <input type="button" value="7" onclick="appendToDisplay('7')">
+    <input type="button" value="8" onclick="appendToDisplay('8')">
+    <input type="button" value="9" onclick="appendToDisplay('9')">
+    <input type="button" value="/" onclick="appendToDisplay('/')">
+    <br>
+    <input type="button" value="4" onclick="appendToDisplay('4')">
+    <input type="button" value="5" onclick="appendToDisplay('5')">
+    <input type="button" value="6" onclick="appendToDisplay('6')">
+    <input type="button" value="*" onclick="appendToDisplay('*')">
+    <br>
+    <input type="button" value="1" onclick="appendToDisplay('1')">
+    <input type="button" value="2" onclick="appendToDisplay('2')">
+    <input type="button" value="3" onclick="appendToDisplay('3')">
+    <input type="button" value="-" onclick="appendToDisplay('-')">
+    <br>
+    <input type="button" value="0" onclick="appendToDisplay('0')">
+    <input type="button" value="." onclick="appendToDisplay('.')">
+    <input type="button" value="=" onclick="calculate()" gr>
+    <input type="button" value="+" onclick="appendToDisplay('+')">
+    <br>
+    <input type="button" value="C" onclick="clearDisplay()">
+    <input none type="button" value=" " style="border: white 0px solid; background: white;">
+    <input none type="button" value=" " style="border: white 0px solid; background: white;">
+    <input none type="button" value=" " style="border: white 0px solid; background: white;" onclick="sct()">
+  </div>
+</div>
+  <div id="hiddenSection">
+    <p>hi</p>
+    <h1>Zach</h1>
+  </div>
+
+  <script>
+    function appendToDisplay(value) {
+      document.getElementById('display').value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById('display').value = '';
+    }
+
+    function calculate() {
+      try {
+        var result = eval(document.getElementById('display').value);
+        document.getElementById('display').value = result;
+      } catch (error) {
+        document.getElementById('display').value = 'Error';
+      }
+    }
+
+    function sct() {
+      var ttl = document.getElementById('display').value;
+      if (ttl == '+7862') {
+        document.getElementById('hiddenSection').style.display = 'block';
+        document.getElementById('n').style.display = 'none';
+      } else {
+        return;
+      }
+    }
+  </script>
+</body>
+</html>
