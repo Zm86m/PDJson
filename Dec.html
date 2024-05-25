@@ -3,58 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JSON Decoder</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-  }
-  #output {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-</style>
+<title>JSON Reader</title>
 </head>
 <body>
+  <textarea id="jsonInput" rows="10" cols="50" placeholder="Paste your JSON here..."></textarea><br>
+  <button onclick="extractSrc()">Extract src</button><br>
+  <div id="output"></div>
 
-<div id="output">
-  <h2>JSON Decoder</h2>
-  <textarea id="jsonInput" rows="6" cols="50" placeholder="Enter JSON here"></textarea>
-  <button onclick="decodeJSON()">Decode</button>
-  <div id="result"></div>
-</div>
-
-<script>
-  function decodeJSON() {
-    var jsonInput = document.getElementById('jsonInput').value;
-    try {
-      var jsonArray = JSON.parse(jsonInput);
-      var resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = ""; // Clear previous results
-      jsonArray.forEach(function(obj) {
-        if (obj.src) {
-          var paragraph = document.createElement('p');
-          paragraph.textContent = "The value of 'src' property is: " + obj.src;
-          resultDiv.appendChild(paragraph);
-        } else {
-          var paragraph = document.createElement('p');
-          paragraph.textContent = "No 'src' property found in the object.";
-          resultDiv.appendChild(paragraph);
-        }
-      });
-    } catch (error) {
-      document.getElementById('result').innerText = "Error: Invalid JSON input.";
+  <script>
+    function decodeUnicodeEscapes(jsonString) {
+        return jsonString.replace(/\\u[\dA-Fa-f]{4}/g, function (match) {
+            return String.fromCharCode(parseInt(match.replace(/\\u/g, ''), 16));
+        });
     }
-  }
-</script>
 
+    function extractSrcFromJSON(jsonString) {
+        try {
+            const jsonArray = JSON.parse(decodeUnicodeEscapes(jsonString));
+            return jsonArray.map(image => image.src);
+        } catch (error) {
+            console.error("Error parsing JSON:", error);
+            return [];
+        }
+    }
+
+    function extractSrc() {
+        const jsonString = document.getElementById('jsonInput').value;
+        const srcArray = extractSrcFromJSON(jsonString);
+        const outputDiv = document.getElementById('output');
+        outputDiv.innerHTML = ''; // Clear previous output
+        srcArray.forEach(src => {
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.width = '200px'; // Adjust image width as needed
+            outputDiv.appendChild(img);
+        });
+    }
+  </script>
 </body>
 </html>
