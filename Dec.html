@@ -29,19 +29,27 @@
   <h2>JSON Decoder</h2>
   <textarea id="jsonInput" rows="6" cols="50" placeholder="Enter JSON here"></textarea>
   <button onclick="decodeJSON()">Decode</button>
-  <p id="result"></p>
+  <div id="result"></div>
 </div>
 
 <script>
   function decodeJSON() {
     var jsonInput = document.getElementById('jsonInput').value;
     try {
-      var jsonObj = JSON.parse(jsonInput);
-      if (jsonObj.src) {
-        document.getElementById('result').innerText = "The value of 'src' property is: " + jsonObj.src;
-      } else {
-        document.getElementById('result').innerText = "No 'src' property found in the JSON input.";
-      }
+      var jsonArray = JSON.parse(jsonInput);
+      var resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = ""; // Clear previous results
+      jsonArray.forEach(function(obj) {
+        if (obj.src) {
+          var paragraph = document.createElement('p');
+          paragraph.textContent = "The value of 'src' property is: " + obj.src;
+          resultDiv.appendChild(paragraph);
+        } else {
+          var paragraph = document.createElement('p');
+          paragraph.textContent = "No 'src' property found in the object.";
+          resultDiv.appendChild(paragraph);
+        }
+      });
     } catch (error) {
       document.getElementById('result').innerText = "Error: Invalid JSON input.";
     }
