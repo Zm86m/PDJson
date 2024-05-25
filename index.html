@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MR</title>
+    <title>Image Decoder</title>
     <style>
         #images {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center;
+            flex-direction: column; /* Stack images vertically */
+            align-items: center;
         }
 
         #images img {
             max-width: 200px;
             margin: 5px;
-            margin-top: 0px;
         }
     </style>
 </head>
@@ -38,6 +39,7 @@
                         const img = document.createElement('img');
                         img.src = url;
                         imagesContainer.appendChild(img);
+                        imagesContainer.appendChild(document.createElement('br')); // Add line break after each image
                     });
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
@@ -61,5 +63,4 @@
     </script>
 </body>
 </html>
-
 
