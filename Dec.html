@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSON Decoder</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+  }
+  #output {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+</style>
+</head>
+<body>
+
+<div id="output">
+  <h2>JSON Decoder</h2>
+  <textarea id="jsonInput" rows="6" cols="50" placeholder="Enter JSON here"></textarea>
+  <button onclick="decodeJSON()">Decode</button>
+  <p id="result"></p>
+</div>
+
+<script>
+  function decodeJSON() {
+    var jsonInput = document.getElementById('jsonInput').value;
+    try {
+      var jsonObj = JSON.parse(jsonInput);
+      if (jsonObj.src) {
+        document.getElementById('result').innerText = "The value of 'src' property is: " + jsonObj.src;
+      } else {
+        document.getElementById('result').innerText = "No 'src' property found in the JSON input.";
+      }
+    } catch (error) {
+      document.getElementById('result').innerText = "Error: Invalid JSON input.";
+    }
+  }
+</script>
+
+</body>
+</html>
